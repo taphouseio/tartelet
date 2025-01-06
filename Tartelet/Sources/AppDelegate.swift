@@ -1,3 +1,4 @@
+import Composers
 import AppKit
 import Foundation
 import SettingsUI

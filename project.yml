@@ -42,7 +42,10 @@ targets:
         products: [SSHData, SSHDomain]
       - package: VirtualMachine
         products: [VirtualMachineData, VirtualMachineDomain]
+      - package: Composers
+        products: Composers
 localPackages:
+  - Packages/Composers
   - Packages/FileSystem
   - Packages/GitHub
   - Packages/Keychain

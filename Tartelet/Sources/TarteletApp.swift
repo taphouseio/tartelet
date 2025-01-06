@@ -1,3 +1,4 @@
+import Composers
 import FileSystemData
 import LoggingData
 import MenuBar
