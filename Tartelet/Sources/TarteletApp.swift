@@ -44,5 +44,13 @@ struct TarteletApp: App {
             fleet: Composers.fleet,
             editor: Composers.editor
         )
+        .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Install Command Line Tool…") {
+                    CommandLineToolInstaller.install()
+                }
+                Divider()
+            }
+        }
     }
 }
