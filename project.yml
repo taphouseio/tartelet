@@ -45,7 +45,7 @@ targets:
       - package: Composers
         products: Composers
       - package: CLI
-        products: CLI
+        products: tartelet
 localPackages:
   - Packages/CLI
   - Packages/Composers

@@ -39,6 +39,10 @@ public struct Tart {
         try await executeCommand(withArguments: ["delete", name])
     }
 
+    public func stop(name: String) async throws {
+        try await executeCommand(withArguments: ["stop", name])
+    }
+
     public func list() async throws -> [String] {
         let result = try await executeCommand(withArguments: ["list", "-q", "--source", "local"])
         return result.split(separator: "\n").map(String.init)
