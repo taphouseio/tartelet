@@ -78,16 +78,26 @@ private struct Select: ParsableCommand {
 
 private struct Start: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        abstract: "Start a Tart VM. This command stays attached until the VM stops."
+        abstract: "Start a Tart VM."
     )
 
     @Option(help: "The Tart VM name. Defaults to the VM selected in Tartelet settings.")
     var name: String?
 
+    @Flag(help: "Stay attached until the VM stops.")
+    var attach = false
+
     func run() async throws {
         let virtualMachineName = try resolvedVirtualMachineName(name)
-        print("starting: \(virtualMachineName)")
-        try await makeTart().run(name: virtualMachineName)
+        let tart = makeTart()
+
+        if attach {
+            print("starting: \(virtualMachineName)")
+            try await tart.run(name: virtualMachineName)
+        } else {
+            try tart.runDetached(name: virtualMachineName)
+            print("started: \(virtualMachineName)")
+        }
     }
 }
 
@@ -108,11 +118,14 @@ private struct Stop: AsyncParsableCommand {
 
 private struct Restart: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        abstract: "Stop and then start a Tart VM. This command stays attached until the VM stops."
+        abstract: "Stop and then start a Tart VM."
     )
 
     @Option(help: "The Tart VM name. Defaults to the VM selected in Tartelet settings.")
     var name: String?
+
+    @Flag(help: "Stay attached after restarting until the VM stops.")
+    var attach = false
 
     func run() async throws {
         let virtualMachineName = try resolvedVirtualMachineName(name)
@@ -120,8 +133,13 @@ private struct Restart: AsyncParsableCommand {
 
         print("stopping: \(virtualMachineName)")
         try await tart.stop(name: virtualMachineName)
-        print("starting: \(virtualMachineName)")
-        try await tart.run(name: virtualMachineName)
+        if attach {
+            print("starting: \(virtualMachineName)")
+            try await tart.run(name: virtualMachineName)
+        } else {
+            try tart.runDetached(name: virtualMachineName)
+            print("started: \(virtualMachineName)")
+        }
     }
 }
 
