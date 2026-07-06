@@ -44,7 +44,10 @@ targets:
         products: [VirtualMachineData, VirtualMachineDomain]
       - package: Composers
         products: Composers
+      - package: CLI
+        products: CLI
 localPackages:
+  - Packages/CLI
   - Packages/Composers
   - Packages/FileSystem
   - Packages/GitHub
